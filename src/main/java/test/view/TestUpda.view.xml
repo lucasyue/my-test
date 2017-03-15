@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ViewConfig>
+  <Arguments/>
+  <Context/>
+  <Model>
+    <DataType name="dataType1" parent="Clearing">
+      <PropertyDef name="supervisor"/>
+      <PropertyDef name="propertyDef1">
+        <Property name="defaultValue">${loginUsername}</Property>
+      </PropertyDef>
+      <PropertyDef name="dex">
+        <Property name="mapping">
+          <Property name="mapValues">
+            <Collection>
+              <Entity>
+                <Property name="key">true</Property>
+                <Property name="value">是</Property>
+              </Entity>
+              <Entity>
+                <Property name="key">false</Property>
+                <Property name="value">否</Property>
+              </Entity>
+            </Collection>
+          </Property>
+        </Property>
+        <Property name="defaultValue">true</Property>
+      </PropertyDef>
+    </DataType>
+  </Model>
+  <View layout="vbox">
+    <Property name="packages">font-awesome</Property>
+    <DataSet id="dataSet1">
+      <Property name="dataProvider">test#paging</Property>
+      <Property name="pageSize">10</Property>
+      <Property name="dataType">[dataType1]</Property>
+    </DataSet>
+    <Button id="bt1">
+      <Property name="caption">sssss</Property>
+      <Property name="action">updateAction1</Property>
+    </Button>
+    <ToolBar>
+      <ToolBarButton id="insert">
+        <ClientEvent name="onClick">view.get(&quot;#dataSet1&quot;).insert({},&quot;begin&quot;);</ClientEvent>
+        <Property name="caption">insert</Property>
+      </ToolBarButton>
+      <ToolBarButton>
+        <Property name="action">updateAction1</Property>
+        <Property name="caption">save</Property>
+      </ToolBarButton>
+      <ToolBarButton>
+        <Property name="caption">backAll</Property>
+        <Property name="action">ajaxAction1</Property>
+      </ToolBarButton>
+      <ToolBarButton>
+        <ClientEvent name="onClick" signature="self,arg,dialog1">dialog1.show();</ClientEvent>
+        <Property name="caption">show</Property>
+      </ToolBarButton>
+      <ToolBarButton>
+        <ClientEvent name="onClick">view.get(&quot;#ajaxAction2&quot;).execute(function(rs){&#xD;
+	alert(rs);&#xD;
+});</ClientEvent>
+        <Property name="caption">testEl</Property>
+      </ToolBarButton>
+      <ToolBarButton>
+        <Property name="caption">export</Property>
+        <Property name="action">downloadAction2</Property>
+      </ToolBarButton>
+      <DataPilot>
+        <Property name="dataSet">dataSet1</Property>
+      </DataPilot>
+    </ToolBar>
+    <DataGrid>
+      <Property name="dataSet">dataSet1</Property>
+      <DataColumn name="id">
+        <Property name="property">id</Property>
+      </DataColumn>
+      <DataColumn name="doNewspaperDate">
+        <Property name="property">doNewspaperDate</Property>
+      </DataColumn>
+      <DataColumn name="doICAlterDate">
+        <Property name="property">doICAlterDate</Property>
+      </DataColumn>
+      <DataColumn name="taxClearingDate">
+        <Property name="property">taxClearingDate</Property>
+      </DataColumn>
+      <DataColumn name="clearingEndDate">
+        <Property name="property">clearingEndDate</Property>
+      </DataColumn>
+      <DataColumn name="reviewClearingDate">
+        <Property name="property">reviewClearingDate</Property>
+      </DataColumn>
+      <DataColumn name="supervisor">
+        <Property name="property">supervisor</Property>
+      </DataColumn>
+      <DataColumn name="operationManager">
+        <Property name="property">operationManager</Property>
+      </DataColumn>
+      <DataColumn name="operationPreparePosition">
+        <Property name="property">operationPreparePosition</Property>
+      </DataColumn>
+      <DataColumn name="createDate">
+        <Property name="property">createDate</Property>
+      </DataColumn>
+      <DataColumn name="productId">
+        <Property name="property">productId</Property>
+      </DataColumn>
+      <DataColumn name="operationManagerUser">
+        <Property name="property">operationManagerUser</Property>
+      </DataColumn>
+      <DataColumn name="operationPreparePositionUser">
+        <Property name="property">operationPreparePositionUser</Property>
+      </DataColumn>
+      <DataColumn name="establishBakDate">
+        <Property name="property">establishBakDate</Property>
+      </DataColumn>
+      <DataColumn name="clearingDate">
+        <Property name="property">clearingDate</Property>
+      </DataColumn>
+    </DataGrid>
+    <UpdateAction id="updateAction1">
+      <ClientEvent name="onSuccess">view.set(&quot;#bt1.disabled&quot;,true);&#xD;
+view.set(&quot;#insert.disabled&quot;,true);&#xD;
+view.get(&quot;#insert&quot;).set('disabled',true);</ClientEvent>
+      <Property name="dataResolver">test#save</Property>
+      <Property name="successMessage">保存成功</Property>
+      <UpdateItem>
+        <Property name="dataSet">dataSet1</Property>
+      </UpdateItem>
+    </UpdateAction>
+    <AjaxAction id="ajaxAction1">
+      <Property name="service">#backAll</Property>
+    </AjaxAction>
+    <AjaxAction id="ajaxAction2">
+      <Property name="service">#testEl</Property>
+    </AjaxAction>
+    <DownloadAction id="downloadAction2">
+      <Property name="fileProvider">oc.exportUtils#exportOpNotcie</Property>
+    </DownloadAction>
+  </View>
+</ViewConfig>

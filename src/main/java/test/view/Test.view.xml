@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ViewConfig>
+  <Arguments/>
+  <Context/>
+  <Model>
+    <DataType name="dataType1" parent="Clearing">
+      <PropertyDef name="supervisor"/>
+      <PropertyDef name="propertyDef1">
+        <Property name="defaultValue">${loginUsername}</Property>
+      </PropertyDef>
+      <PropertyDef name="dex">
+        <Property name="mapping">
+          <Property name="mapValues">
+            <Collection>
+              <Entity>
+                <Property name="key">true</Property>
+                <Property name="value">是</Property>
+              </Entity>
+              <Entity>
+                <Property name="key">false</Property>
+                <Property name="value">否</Property>
+              </Entity>
+            </Collection>
+          </Property>
+        </Property>
+        <Property name="defaultValue">true</Property>
+      </PropertyDef>
+    </DataType>
+  </Model>
+  <View layout="vbox">
+    <Property name="packages">font-awesome</Property>
+    <DataSet id="dataSet1">
+      <Property name="dataProvider">#paging</Property>
+      <Property name="pageSize">10</Property>
+      <Property name="dataType">[dataType1]</Property>
+    </DataSet>
+    <DataSet id="dataSet2">
+      <Property name="dataType">[dataType1]</Property>
+      <Property name="pageSize">3</Property>
+    </DataSet>
+    <AjaxAction id="ajaxAction3">
+      <Property name="service">#testTran</Property>
+    </AjaxAction>
+    <AjaxAction id="ajaxAction4">
+      <Property name="service">#testEnvVri</Property>
+    </AjaxAction>
+    <AjaxAction id="ajaxAction5">
+      <Property name="service">#testTranQuery</Property>
+    </AjaxAction>
+    <AjaxAction id="testLdap">
+      <ClientEvent name="onSuccess">alert(arg.result);&#xD;
+</ClientEvent>
+      <Property name="service">#testLdap</Property>
+    </AjaxAction>
+    <AjaxAction id="ajaxActionUflo">
+      <Property name="service">#completeAll</Property>
+    </AjaxAction>
+    <Container>
+      <Property name="height">800</Property>
+      <ToolBar>
+        <ToolBarButton>
+          <Property name="caption">testLdap</Property>
+          <Property name="action">testLdap</Property>
+        </ToolBarButton>
+        <ToolBarButton>
+          <Property name="caption">transQuery</Property>
+          <Property name="action">ajaxAction5</Property>
+        </ToolBarButton>
+        <ToolBarButton>
+          <Property name="caption">testtrans1</Property>
+          <Property name="action">ajaxAction3</Property>
+        </ToolBarButton>
+        <ToolBarButton>
+          <Property name="action">ajaxAction3</Property>
+          <Property name="caption">testtran</Property>
+        </ToolBarButton>
+        <ToolBarButton>
+          <Property name="caption">testenv</Property>
+          <Property name="action">ajaxAction4</Property>
+        </ToolBarButton>
+        <ToolBarButton>
+          <ClientEvent name="onClick">for(var i=0;i&lt;20;i++){&#xD;
+	view.get(&quot;#dataSet1&quot;).insert({'id':i+&quot;&quot;,dex:true},&quot;begin&quot;);&#xD;
+}</ClientEvent>
+          <Property name="caption">insert</Property>
+        </ToolBarButton>
+        <DataPilot>
+          <Property name="dataSet">dataSet1</Property>
+        </DataPilot>
+        <ToolBarButton>
+          <ClientEvent name="onClick">view.get(&quot;#dialog2&quot;).show();</ClientEvent>
+          <Property name="caption">tagEditor</Property>
+        </ToolBarButton>
+        <ToolBarButton>
+          <Property name="caption">testUflo</Property>
+          <Property name="action">ajaxActionUflo</Property>
+        </ToolBarButton>
+      </ToolBar>
+      <DataGrid>
+        <Property name="dataSet">dataSet1</Property>
+        <Property name="height">300</Property>
+        <RowNumColumn/>
+        <DataColumn name="supervisor">
+          <Property name="property">supervisor</Property>
+        </DataColumn>
+        <DataColumn name="propertyDef1">
+          <Property name="property">propertyDef1</Property>
+        </DataColumn>
+        <DataColumn name="dex">
+          <Property name="property">dex</Property>
+        </DataColumn>
+        <DataColumn name="id">
+          <Property name="property">id</Property>
+        </DataColumn>
+      </DataGrid>
+    </Container>
+    <Dialog id="dialog2">
+      <Buttons/>
+      <Children>
+        <AutoForm>
+          <Property name="dataType">dataType1</Property>
+          <Property name="createPrivateDataSet">true</Property>
+          <AutoFormElement>
+            <Property name="name">supervisor</Property>
+            <Property name="property">supervisor</Property>
+            <Editor/>
+          </AutoFormElement>
+          <AutoFormElement>
+            <Property name="name">propertyDef1</Property>
+            <Property name="property">propertyDef1</Property>
+            <Editor/>
+          </AutoFormElement>
+          <AutoFormElement>
+            <Property name="name">dex</Property>
+            <Property name="property">dex</Property>
+            <Property name="editorType">RadioGroup</Property>
+            <Editor/>
+          </AutoFormElement>
+          <TagEditor>
+            <Property name="editable">false</Property>
+            <Property name="trigger">listDropDown1</Property>
+            <Property name="readOnly">false</Property>
+          </TagEditor>
+        </AutoForm>
+        <ListDropDown id="listDropDown1">
+          <Property name="items">a,b,c,d</Property>
+        </ListDropDown>
+      </Children>
+      <Tools/>
+    </Dialog>
+    <SplitPanel>
+      <Property name="position">599</Property>
+      <Property name="height">200</Property>
+      <MainControl>
+        <Uploader>
+          <Property name="relationId">222f0367-7f52-4b2d-9687-61d09f2dbc71</Property>
+          <Buttons/>
+          <Children/>
+          <Tools/>
+        </Uploader>
+      </MainControl>
+      <SideControl>
+        <Panel>
+          <Property name="collapseable">true</Property>
+          <Property name="showCaptionBar">true</Property>
+          <Property name="iconClass">fa fa-plus</Property>
+          <Buttons/>
+          <Children>
+            <PDFUeditor>
+              <Property name="dataSet">dataSet1</Property>
+              <Property name="fileName">sss</Property>
+              <Property name="property">supervisor</Property>
+            </PDFUeditor>
+            <Container>
+              <ToolBar>
+                <ToolBarButton>
+                  <Property name="action">updateAction1</Property>
+                  <Property name="caption">save</Property>
+                </ToolBarButton>
+                <ToolBarButton>
+                  <Property name="caption">backAll</Property>
+                  <Property name="action">ajaxAction1</Property>
+                </ToolBarButton>
+                <ToolBarButton>
+                  <ClientEvent name="onClick" signature="self,arg,dialog1">dialog1.show();</ClientEvent>
+                  <Property name="caption">show</Property>
+                </ToolBarButton>
+                <ToolBarButton>
+                  <ClientEvent name="onClick">view.get(&quot;#ajaxAction2&quot;).execute(function(rs){&#xD;
+	alert(rs);&#xD;
+});</ClientEvent>
+                  <Property name="caption">testEl</Property>
+                </ToolBarButton>
+                <ToolBarButton>
+                  <Property name="caption">export</Property>
+                  <Property name="action">downloadAction2</Property>
+                </ToolBarButton>
+              </ToolBar>
+              <DataGrid>
+                <Property name="dataSet">dataSet1</Property>
+                <DataColumn name="id">
+                  <Property name="property">id</Property>
+                </DataColumn>
+                <DataColumn name="doNewspaperDate">
+                  <Property name="property">doNewspaperDate</Property>
+                </DataColumn>
+                <DataColumn name="doICAlterDate">
+                  <Property name="property">doICAlterDate</Property>
+                </DataColumn>
+                <DataColumn name="taxClearingDate">
+                  <Property name="property">taxClearingDate</Property>
+                </DataColumn>
+                <DataColumn name="clearingEndDate">
+                  <Property name="property">clearingEndDate</Property>
+                </DataColumn>
+                <DataColumn name="reviewClearingDate">
+                  <Property name="property">reviewClearingDate</Property>
+                </DataColumn>
+                <DataColumn name="supervisor">
+                  <Property name="property">supervisor</Property>
+                </DataColumn>
+                <DataColumn name="operationManager">
+                  <Property name="property">operationManager</Property>
+                </DataColumn>
+                <DataColumn name="operationPreparePosition">
+                  <Property name="property">operationPreparePosition</Property>
+                </DataColumn>
+                <DataColumn name="createDate">
+                  <Property name="property">createDate</Property>
+                </DataColumn>
+                <DataColumn name="productId">
+                  <Property name="property">productId</Property>
+                </DataColumn>
+                <DataColumn name="operationManagerUser">
+                  <Property name="property">operationManagerUser</Property>
+                </DataColumn>
+                <DataColumn name="operationPreparePositionUser">
+                  <Property name="property">operationPreparePositionUser</Property>
+                </DataColumn>
+                <DataColumn name="establishBakDate">
+                  <Property name="property">establishBakDate</Property>
+                </DataColumn>
+                <DataColumn name="clearingDate">
+                  <Property name="property">clearingDate</Property>
+                </DataColumn>
+              </DataGrid>
+              <UpdateAction id="updateAction1">
+                <Property name="dataResolver">#save</Property>
+                <UpdateItem>
+                  <Property name="dataSet">dataSet1</Property>
+                </UpdateItem>
+              </UpdateAction>
+              <AjaxAction id="ajaxAction1">
+                <Property name="service">#backAll</Property>
+              </AjaxAction>
+              <Dialog id="dialog1">
+                <Property name="height">500</Property>
+                <Property name="width">600</Property>
+                <Buttons/>
+                <Children>
+                  <Container>
+                    <Container>
+                      <Label layoutConstraint="right">
+                        <ClientEvent name="onClick">var htmlContent=view.get(&quot;#dataSet1.data:#.supervisor&quot;);&#xD;
+new dorado.widget.AjaxAction({&#xD;
+	service:&quot;test#generalPDF&quot;,&#xD;
+	parameter:{&#xD;
+		htmlContent:htmlContent&#xD;
+	}&#xD;
+}).execute(function(uuid){&#xD;
+	if(uuid){&#xD;
+		new dorado.widget.DownloadAction({&#xD;
+			fileProvider:&quot;test#downloadPDF&quot;,&#xD;
+			parameter:{&#xD;
+				uuid:uuid,fileName:'特殊运营事项'&#xD;
+			}&#xD;
+		}).execute();&#xD;
+	}&#xD;
+});</ClientEvent>
+                        <Property name="text">导出PDF</Property>
+                        <Property name="style">
+                          <Property name="padding-right">5px</Property>
+                        </Property>
+                      </Label>
+                    </Container>
+                    <UEditor id="uEditor1">
+                      <ClientEvent name="onReady">self._editor.setOpt(&quot;allHtmlEnabled&quot;, true);</ClientEvent>
+                      <ClientEvent name="onCreate">var btn=new UE.ui.Button({&#xD;
+        //按钮的名字&#xD;
+        name:'button1',&#xD;
+        //提示&#xD;
+        title:'导出PDF',&#xD;
+        //需要添加的额外样式，指定icon图标，这里默认使用一个重复的icon&#xD;
+        cssRules :'background-position:-280px -40px',&#xD;
+        //点击时执行的命令&#xD;
+        onclick:function () {&#xD;
+            //这里可以不用执行命令,做你自己的操作也可&#xD;
+        	alert(&quot;xxx1222&quot;);&#xD;
+		}&#xD;
+	});&#xD;
+self.set('registerUI',{&#xD;
+	id:'button1',&#xD;
+	index:1,&#xD;
+	btn:btn&#xD;
+});</ClientEvent>
+                      <Property name="dataSet">dataSet1</Property>
+                      <Property name="property">supervisor</Property>
+                      <Property name="userData">ssss</Property>
+                    </UEditor>
+                  </Container>
+                </Children>
+                <Tools/>
+              </Dialog>
+              <AjaxAction id="ajaxAction2">
+                <Property name="service">#testEl</Property>
+              </AjaxAction>
+              <DownloadAction id="downloadAction2">
+                <Property name="fileProvider">oc.exportUtils#exportOpNotcie</Property>
+              </DownloadAction>
+            </Container>
+          </Children>
+          <Tools>
+            <SimpleIconButton>
+              <Property name="iconClass">fa fa-plus</Property>
+              <Property name="style">
+                <Property name="background-color">green</Property>
+              </Property>
+            </SimpleIconButton>
+          </Tools>
+        </Panel>
+      </SideControl>
+    </SplitPanel>
+  </View>
+</ViewConfig>

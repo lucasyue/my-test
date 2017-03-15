@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ViewConfig>
+  <Arguments/>
+  <Context/>
+  <Model>
+    <DataType name="Person">
+      <PropertyDef name="id"/>
+      <PropertyDef name="name"/>
+      <PropertyDef name="select">
+        <Property name="dataType">boolean</Property>
+      </PropertyDef>
+    </DataType>
+  </Model>
+  <View>
+    <ClientEvent name="onReady">var dt=view.get(&quot;@[Person]&quot;);&#xD;
+var ds1=new dorado.widget.DataSet({dataType:dt});&#xD;
+var datas=[];&#xD;
+for(var i=0;i&lt;10;i++){&#xD;
+	datas.push({id:'id'+i,name:'name'+i,select:false});&#xD;
+}&#xD;
+ds1.setData(datas);&#xD;
+var ds=new dorado.widget.DataSet({pageSize:3,dataType:dt});&#xD;
+$ClientPageHelper.transferPageData(ds1,ds);&#xD;
+var bt1=new dorado.widget.Button({caption:'选中'});&#xD;
+var bt2=new dorado.widget.Button({caption:'所有',listener:{&#xD;
+	onClick:function(){&#xD;
+		var all=ds.getData();&#xD;
+		var s=all.toArray().join(',');&#xD;
+		alert(s);&#xD;
+	}&#xD;
+}});&#xD;
+var bt3=new dorado.widget.Button({caption:'保存勾选'});&#xD;
+var bt4=new dorado.widget.Button({caption:'删除'});&#xD;
+view.addChild(bt1);&#xD;
+view.addChild(bt2);&#xD;
+view.addChild(bt3);&#xD;
+view.addChild(bt4);&#xD;
+var dg=new dorado.widget.DataGrid({dataSet:ds,selectionMode:'multiRows',rowSelectionProperty:'select'});&#xD;
+var s1=new dorado.widget.grid.RowSelectorColumn();&#xD;
+var column1=new dorado.widget.grid.DataColumn({property:'name',name:'name'});&#xD;
+var column2=new dorado.widget.grid.DataColumn({property:'id',name:'id'});&#xD;
+dg.addColumn(s1);&#xD;
+dg.addColumn(column1);&#xD;
+dg.addColumn(column2);&#xD;
+var dsPilot=new dorado.widget.DataPilot({dataSet:ds});&#xD;
+view.addChild(dsPilot);&#xD;
+view.addChild(ds);&#xD;
+view.addChild(dg);&#xD;
+bt1.set({&#xD;
+	listener:{&#xD;
+       onClick:function(self,arg){&#xD;
+	   	var s=dg.get(&quot;selection&quot;);&#xD;
+		var ss=[];&#xD;
+		s.each(function(p){&#xD;
+			ss.push(p.get('name'));&#xD;
+		});&#xD;
+		alert(ss.join(','));&#xD;
+    }&#xD;
+  }&#xD;
+});&#xD;
+bt3.set({&#xD;
+	listener:{&#xD;
+       onClick:function(self,arg){&#xD;
+	   	var s=dg.get(&quot;selection&quot;);&#xD;
+		 var ss=[];&#xD;
+		 s.each(function(p){&#xD;
+			if(p.get('select')){&#xD;
+			   ss.push(p.get('name'));&#xD;
+			}&#xD;
+		 });&#xD;
+	     alert(ss.join(','));&#xD;
+		 $ClientPageHelper.resetDsData(s,ds);&#xD;
+    }&#xD;
+  }&#xD;
+});&#xD;
+bt4.set({&#xD;
+	listener:{&#xD;
+       onClick:function(self,arg){&#xD;
+	   	var s=dg.get(&quot;selection&quot;);&#xD;
+		 var ss=[];&#xD;
+		 s.each(function(p){&#xD;
+			if(p.get('select')){&#xD;
+			   ss.push(p.get('name'));&#xD;
+			}&#xD;
+		 });&#xD;
+	     alert(ss.join(','));&#xD;
+		 $ClientPageHelper.deleteDsData(s,ds);&#xD;
+    }&#xD;
+  }&#xD;
+});</ClientEvent>
+    <ClientEvent name="onCreate">window.$$Logger = {&#xD;
+	log:function(msg){&#xD;
+		if(console){&#xD;
+			console.log(msg);&#xD;
+		}&#xD;
+	}&#xD;
+}&#xD;
+//$$Logger.log('xxxx')&#xD;
+window.$ClientPageHelper = {&#xD;
+	transferPageData: function(fromDs, toDs){&#xD;
+		var elist = fromDs.getData();&#xD;
+		$ClientPageHelper.resetDsData(elist, toDs, true);&#xD;
+	},&#xD;
+	deleteDsData: function(selection,ds){&#xD;
+		if(!selection || selection.size&lt;1){&#xD;
+			return;&#xD;
+		}&#xD;
+		var pageList=ds.getData();&#xD;
+		var datas=[];&#xD;
+		var pages=pageList._pages;&#xD;
+		var allDatas=pages.get('1').entityList._keyMap;&#xD;
+		for(var dataId in allDatas){&#xD;
+			var flag=false;&#xD;
+			selection.each(function(s){&#xD;
+				if(dataId==s.entityId){&#xD;
+					flag=true;&#xD;
+					return;&#xD;
+				}&#xD;
+			});&#xD;
+			if(!flag){&#xD;
+				datas.push(allDatas[dataId]);&#xD;
+			}&#xD;
+		}&#xD;
+		$ClientPageHelper.resetDsData(datas, ds);&#xD;
+	},&#xD;
+	resetDsData: function(elist, toDs, first){&#xD;
+		if (!first) {&#xD;
+			toDs.clear();&#xD;
+		}&#xD;
+		var pageSize = toDs.get('pageSize');&#xD;
+		var entityCount;&#xD;
+		var pageList = new dorado.EntityList();&#xD;
+		var datas;&#xD;
+		if (elist instanceof Array) {&#xD;
+			datas = elist;&#xD;
+			entityCount = elist.length;&#xD;
+		}&#xD;
+		else {&#xD;
+			datas = elist.toArray();&#xD;
+			entityCount = elist.entityCount;&#xD;
+		}&#xD;
+		var pageCount = parseInt((entityCount - 1) / pageSize) + 1;&#xD;
+		for (var pi = 0; pi &lt; pageCount; pi++) {&#xD;
+			var page = new dorado.EntityList.Page(pageList, pi + 1);&#xD;
+			var start = pi * pageSize;&#xD;
+			var max = (pi + 1) * pageSize;&#xD;
+			for (var no = start; no &lt; max; no++) {&#xD;
+				var e = datas[no];&#xD;
+				if (e) {&#xD;
+					page.insert(e);&#xD;
+				}&#xD;
+			}&#xD;
+			pageList._pages.insert(page);&#xD;
+		}&#xD;
+		pageList.pageNo = 1;&#xD;
+		pageList.pageSize = pageSize;&#xD;
+		pageList.entityCount = entityCount;&#xD;
+		pageList.pageCount = pageCount;&#xD;
+		toDs.setData(pageList);&#xD;
+	}&#xD;
+}</ClientEvent>
+    <DataGrid>
+      <Property name="height">100</Property>
+      <RowSelectorColumn/>
+    </DataGrid>
+  </View>
+</ViewConfig>

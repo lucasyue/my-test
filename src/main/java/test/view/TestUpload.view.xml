@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ViewConfig>
+  <Arguments/>
+  <Context/>
+  <Model/>
+  <View>
+    <ToolBar>
+      <Button>
+        <Property name="action">uploadAction1</Property>
+        <Property name="caption">upload</Property>
+      </Button>
+      <Button>
+        <ClientEvent name="onClick">view.get(&quot;#uploadAction1&quot;).start();</ClientEvent>
+        <Property name="caption">start</Property>
+      </Button>
+    </ToolBar>
+    <ToolBar>
+      <ToolBarButton/>
+      <ToolBarButton/>
+    </ToolBar>
+    <Uploader>
+      <Buttons/>
+      <Children/>
+      <Tools/>
+    </Uploader>
+  </View>
+</ViewConfig>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ViewConfig>
+  <Arguments/>
+  <Context/>
+  <Model>
+    <DataType name="dataType1" parent="Clearing">
+      <PropertyDef name="supervisor"/>
+      <PropertyDef name="propertyDef1">
+        <Property name="defaultValue">${loginUsername}</Property>
+      </PropertyDef>
+      <PropertyDef name="dex">
+        <Property name="mapping">
+          <Property name="mapValues">
+            <Collection>
+              <Entity>
+                <Property name="key">true</Property>
+                <Property name="value">是</Property>
+              </Entity>
+              <Entity>
+                <Property name="key">false</Property>
+                <Property name="value">否</Property>
+              </Entity>
+            </Collection>
+          </Property>
+        </Property>
+        <Property name="defaultValue">true</Property>
+      </PropertyDef>
+    </DataType>
+  </Model>
+  <View layout="vbox">
+    <Property name="packages">font-awesome</Property>
+    <DataSet id="dataSet1">
+      <ClientEvent name="onCreate">alert('create');</ClientEvent>
+      <ClientEvent name="onReady">alert('ready');</ClientEvent>
+      <ClientEvent name="onLoadData">alert('loaddata');</ClientEvent>
+      <ClientEvent name="beforeLoadData">alert('beforeload');</ClientEvent>
+      <ClientEvent name="onAttributeChange">alert('atrchange');&#xD;
+</ClientEvent>
+      <Property name="dataProvider">test#paging</Property>
+      <Property name="pageSize">10</Property>
+      <Property name="dataType">[dataType1]</Property>
+    </DataSet>
+    <DataGrid>
+      <Property name="dataSet">dataSet1</Property>
+      <Property name="height">300</Property>
+      <RowNumColumn/>
+      <DataColumn name="supervisor">
+        <Property name="property">supervisor</Property>
+      </DataColumn>
+      <DataColumn name="propertyDef1">
+        <Property name="property">propertyDef1</Property>
+      </DataColumn>
+      <DataColumn name="dex">
+        <Property name="property">dex</Property>
+      </DataColumn>
+      <DataColumn name="id">
+        <Property name="property">id</Property>
+      </DataColumn>
+    </DataGrid>
+  </View>
+</ViewConfig>

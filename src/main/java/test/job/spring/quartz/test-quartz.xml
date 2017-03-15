@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:d="http://www.bstek.com/dorado/schema"
+	    xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+	http://www.bstek.com/dorado/schema http://www.bstek.com/dorado/schema/spring-dorado-7.0.xsd">
+	<bean id="testJobDetail1" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">   
+        <property name="targetObject" ref="testJob1"/>  
+        <property name="targetMethod" value="execute"/>  
+        <property name="concurrent" value="true"/>
+        <!--是否允许任务并发执行。当值为false时，表示必须等到前一个线程处理完毕后才再启一个新的线程-->  
+	</bean>
+    <bean id="testTrigger1" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
+       <property name="jobDetail" ref="testJobDetail1"/>  
+       <property name="cronExpression" value="*/3 * * * * ?"/><!-- 每隔1秒钟触发一次 -->
+	</bean>
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">  
+	      <property name="triggers">
+	         <list>
+	              <ref bean="testTrigger1"/>
+	         </list>
+	      </property>
+	      <property name="autoStartup" value="true"/>
+	</bean>
+	<bean id="testJob1" class="test.TestJob"/>
+</beans>

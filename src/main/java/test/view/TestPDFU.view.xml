@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ViewConfig>
+  <Arguments/>
+  <Context/>
+  <Model/>
+  <View>
+    <Container>
+      <Label layoutConstraint="left">
+        <ClientEvent name="onReady">var label=&quot;${acomp.prop('caption')}&quot;;&#xD;
+if(label)self.set('text',label);</ClientEvent>
+      </Label>
+      <Container layout="hbox" layoutConstraint="right">
+        <Property name="contentOverflowY">hidden</Property>
+        <Button>
+          <ClientEvent name="onClick">var pro=&quot;${acomp.prop('property')}&quot;;&#xD;
+var dataSet=&quot;${acomp.prop('dataSet')}&quot;;&#xD;
+var htmlContent=[];&#xD;
+if(dataSet) {&#xD;
+	htmlContent=view.get(&quot;#${acomp.prop('dataSet')}.data:#.&quot;+pro);&#xD;
+} else {&#xD;
+	htmlContent[0]=self.get('parent.parent')._children[1]._value;&#xD;
+}&#xD;
+if(htmlContent.length&lt;1||!htmlContent[0]){&#xD;
+	return;&#xD;
+}&#xD;
+var fileName=&quot;${acomp.prop('fileName')}&quot;;&#xD;
+if(!fileName){&#xD;
+	fileName=&quot;pdf1&quot;;&#xD;
+}&#xD;
+new dorado.widget.AjaxAction({&#xD;
+	service:&quot;oc.pdfUEditor#generalPDF&quot;,&#xD;
+	parameter:{&#xD;
+		htmlContent:htmlContent&#xD;
+	}&#xD;
+}).execute(function(uuid){&#xD;
+	if(uuid){&#xD;
+		new dorado.widget.DownloadAction({&#xD;
+			fileProvider:&quot;oc.pdfUEditor#downloadPDF&quot;,&#xD;
+			parameter:{&#xD;
+				uuid:uuid,fileName:fileName&#xD;
+			}&#xD;
+		}).execute();&#xD;
+	}&#xD;
+});</ClientEvent>
+          <Property name="caption">导出PDF</Property>
+        </Button>
+        <Button>
+          <ClientEvent name="onClick">var parent=self._parent;&#xD;
+if(parent){&#xD;
+	parent=parent._parent;&#xD;
+	if(parent){&#xD;
+	   var dialog=parent._parent;&#xD;
+		 if(dialog&amp;&amp;dialog instanceof dorado.widget.Dialog){&#xD;
+		   dialog.hide();&#xD;
+	     }&#xD;
+    }&#xD;
+}</ClientEvent>
+          <ClientEvent name="onReady">var parent=self._parent;&#xD;
+if(parent){&#xD;
+	parent=parent._parent;&#xD;
+	if(parent){&#xD;
+	   var dialog=parent._parent;&#xD;
+		 if(dialog&amp;&amp;dialog instanceof dorado.widget.Dialog){&#xD;
+	     }else{&#xD;
+		 	self.set(&quot;visible&quot;,false);&#xD;
+		 }&#xD;
+    }&#xD;
+}</ClientEvent>
+          <Property name="caption">关闭</Property>
+        </Button>
+      </Container>
+    </Container>
+    <ToolBar>
+      <ToolBarButton id="toolBarButton1">
+        <ClientEvent name="onClick">view.get(&quot;#dialog1&quot;).show();</ClientEvent>
+        <Property name="caption">ddd</Property>
+      </ToolBarButton>
+    </ToolBar>
+    <Dialog id="dialog1">
+      <Property name="height">500</Property>
+      <Property name="showCaptionBar">false</Property>
+      <Property name="width">600</Property>
+      <Buttons/>
+      <Children>
+        <Container>
+          <Container layout="hbox" layoutConstraint="right">
+            <Property name="contentOverflowY">hidden</Property>
+            <Button>
+              <ClientEvent name="onClick">var pro=&quot;${acomp.prop('property')}&quot;;&#xD;
+var dataSet=&quot;${acomp.prop('dataSet')}&quot;;&#xD;
+var htmlContent=[];&#xD;
+if(dataSet) {&#xD;
+	htmlContent=view.get(&quot;#${acomp.prop('dataSet')}.data:#.&quot;+pro);&#xD;
+} else {&#xD;
+	htmlContent[0]=self.get('parent.parent')._children[1]._value;&#xD;
+}&#xD;
+if(htmlContent.length&lt;1||!htmlContent[0]){&#xD;
+	return;&#xD;
+}&#xD;
+var fileName=&quot;${acomp.prop('fileName')}&quot;;&#xD;
+if(!fileName){&#xD;
+	fileName=&quot;pdf1&quot;;&#xD;
+}&#xD;
+new dorado.widget.AjaxAction({&#xD;
+	service:&quot;oc.pdfUEditor#generalPDF&quot;,&#xD;
+	parameter:{&#xD;
+		htmlContent:htmlContent&#xD;
+	}&#xD;
+}).execute(function(uuid){&#xD;
+	if(uuid){&#xD;
+		new dorado.widget.DownloadAction({&#xD;
+			fileProvider:&quot;oc.pdfUEditor#downloadPDF&quot;,&#xD;
+			parameter:{&#xD;
+				uuid:uuid,fileName:fileName&#xD;
+			}&#xD;
+		}).execute();&#xD;
+	}&#xD;
+});</ClientEvent>
+              <Property name="caption">导出PDF</Property>
+            </Button>
+            <Button>
+              <ClientEvent name="onClick">var dialog=self.$getDialog(self);&#xD;
+if(dialog){&#xD;
+	dialog.hide();&#xD;
+}</ClientEvent>
+              <ClientEvent name="onReady">var dialog=self.$getDialog(self);&#xD;
+if(!dialog){&#xD;
+	self.set(&quot;visible&quot;,false);&#xD;
+}</ClientEvent>
+              <ClientEvent name="onCreate">self.$getDialog = function(self){&#xD;
+	var parent = self._parent;&#xD;
+	if (parent) {&#xD;
+		parent = parent._parent;&#xD;
+		if (parent &amp;&amp; parent._parent) {&#xD;
+			parent = parent._parent;&#xD;
+			var dialog = parent._parent;&#xD;
+			if (dialog &amp;&amp; dialog instanceof dorado.widget.Dialog) {&#xD;
+			    return dialog;&#xD;
+			}&#xD;
+		}&#xD;
+	}&#xD;
+}</ClientEvent>
+              <Property name="caption">关闭</Property>
+            </Button>
+          </Container>
+        </Container>
+        <PDFUeditor>
+          <Property name="caption">公告</Property>
+        </PDFUeditor>
+      </Children>
+      <Tools/>
+    </Dialog>
+    <Panel>
+      <Buttons/>
+      <Children>
+        <PDFUeditor/>
+      </Children>
+      <Tools/>
+    </Panel>
+  </View>
+</ViewConfig>

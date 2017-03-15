@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ViewConfig>
+  <Arguments/>
+  <Context/>
+  <Model/>
+  <View>
+    <Container>
+      <Property name="width">300</Property>
+      <Button>
+        <ClientEvent name="onClick">view.get(&quot;#longTask1&quot;).execute();&#xD;
+view.get(&quot;#dialog1&quot;).show();</ClientEvent>
+        <Property name="caption">Start</Property>
+      </Button>
+      <LongTask id="longTask1">
+        <ClientEvent name="onStateChange">if(arg.data){&#xD;
+&#xD;
+view.get(&quot;#progressBar1&quot;).set({&#xD;
+	maxValue:arg.data.maxValue,&#xD;
+	value:arg.data.value&#xD;
+});&#xD;
+&#xD;
+}&#xD;
+view.set(&quot;#label1.text&quot;,arg.text);</ClientEvent>
+        <ClientEvent name="onSuccess">view.get(&quot;#dialog1&quot;).hide();</ClientEvent>
+        <Property name="taskName">test#demoLongTask</Property>
+      </LongTask>
+      <Dialog id="dialog1">
+        <Buttons/>
+        <Children>
+          <ProgressBar id="progressBar1"/>
+          <Label id="label1"/>
+        </Children>
+        <Tools/>
+      </Dialog>
+    </Container>
+    <Button>
+      <ClientEvent name="onClick">window.$socket = dorado.Socket.connect({ service: &quot;test#messageService&quot;, onReceive: function(arg) {&#xD;
+    alert(&quot;收到了来自服务器的消息...&quot; + &quot;\ntype:&quot; + arg.type + &quot;\ndata:&quot; + arg.data);&#xD;
+}});</ClientEvent>
+      <Property name="caption">SocketConnect</Property>
+    </Button>
+    <Button>
+      <ClientEvent name="onClick">window.$socket.send(&quot;chat&quot;,&quot;chat....&quot;);</ClientEvent>
+      <Property name="caption">chat...</Property>
+    </Button>
+  </View>
+</ViewConfig>

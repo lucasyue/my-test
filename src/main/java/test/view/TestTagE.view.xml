@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ViewConfig>
+  <Arguments/>
+  <Context/>
+  <Model>
+    <DataType name="dataType1" parent="Clearing">
+      <PropertyDef name="supervisor"/>
+      <PropertyDef name="propertyDef1">
+        <Property name="defaultValue">${loginUsername}</Property>
+      </PropertyDef>
+      <PropertyDef name="dex">
+        <Property name="mapping">
+          <Property name="mapValues">
+            <Collection>
+              <Entity>
+                <Property name="key">true</Property>
+                <Property name="value">是</Property>
+              </Entity>
+              <Entity>
+                <Property name="key">false</Property>
+                <Property name="value">否</Property>
+              </Entity>
+            </Collection>
+          </Property>
+        </Property>
+        <Property name="defaultValue">true</Property>
+      </PropertyDef>
+    </DataType>
+  </Model>
+  <View layout="vbox">
+    <Property name="packages">font-awesome</Property>
+    <ToolBar>
+      <ToolBarButton>
+        <ClientEvent name="onClick">view.get(&quot;#dialog2&quot;).show();</ClientEvent>
+        <Property name="caption">tagEditor</Property>
+      </ToolBarButton>
+    </ToolBar>
+    <Dialog id="dialog2">
+      <Property name="width">500</Property>
+      <Property name="height">500</Property>
+      <Buttons/>
+      <Children>
+        <AutoForm>
+          <Property name="createPrivateDataSet">true</Property>
+          <AutoFormElement>
+            <Property name="name">supervisor</Property>
+            <Property name="property">supervisor</Property>
+            <Property name="editable">false</Property>
+            <Property name="trigger">listDropDown1</Property>
+            <Editor/>
+          </AutoFormElement>
+          <AutoFormElement>
+            <Property name="name">propertyDef1</Property>
+            <Property name="property">propertyDef1</Property>
+            <Editor/>
+          </AutoFormElement>
+          <AutoFormElement>
+            <Property name="name">dex</Property>
+            <Property name="property">dex</Property>
+            <Property name="editorType">RadioGroup</Property>
+            <Editor/>
+          </AutoFormElement>
+          <TagEditor>
+            <Property name="trigger">customDropDown1</Property>
+            <Property name="readOnly">false</Property>
+            <Property name="editable">false</Property>
+          </TagEditor>
+        </AutoForm>
+        <ListDropDown id="listDropDown1">
+          <Property name="items">a,b,c,d</Property>
+        </ListDropDown>
+        <CustomDropDown id="customDropDown1">
+          <DataGrid>
+            <ClientEvent name="onDataRowDoubleClick">var selection=self.get(&quot;selection&quot;);&#xD;
+var selected=[];&#xD;
+if(selection){&#xD;
+	selection.each(function(s){&#xD;
+		selected.push(s.get('dex'));&#xD;
+	});&#xD;
+}&#xD;
+var dp=dorado.widget.DropDown.findDropDown(self);&#xD;
+dp.close(selected);</ClientEvent>
+            <Property name="dataSet">dataSet1</Property>
+            <Property name="height">300</Property>
+            <Property name="selectionMode">multiRows</Property>
+            <Property name="readOnly">true</Property>
+            <RowNumColumn/>
+            <RowSelectorColumn/>
+            <DataColumn name="supervisor">
+              <Property name="property">supervisor</Property>
+            </DataColumn>
+            <DataColumn name="propertyDef1">
+              <Property name="property">propertyDef1</Property>
+            </DataColumn>
+            <DataColumn name="dex">
+              <Property name="property">dex</Property>
+            </DataColumn>
+            <DataColumn name="id">
+              <Property name="property">id</Property>
+            </DataColumn>
+          </DataGrid>
+        </CustomDropDown>
+        <DataSet id="dataSet1">
+          <Property name="dataProvider">test#paging</Property>
+          <Property name="pageSize">10</Property>
+          <Property name="dataType">[dataType1]</Property>
+        </DataSet>
+      </Children>
+      <Tools/>
+    </Dialog>
+  </View>
+</ViewConfig>
