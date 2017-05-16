@@ -26,7 +26,7 @@ import com.bstek.bdf2.core.model.DefaultUser;
 
 public class TestEmail {
 	public static void main(String[] args) throws UnsupportedEncodingException, MessagingException {
-		new TestEmail().main2();
+		new TestEmail().main1();
 	}
 	public void main2() throws MessagingException, UnsupportedEncodingException {
 		final String smtpFrom = "hksda@noahwm.com";
@@ -78,6 +78,7 @@ private Session getMailSession(){
 		EmailSender sender=new EmailSender();
 		String smtpHost = "smtp.163.com";
 		String smtpPassword = "abc123";
+		//pwd=gopher2017
 		String smtpUser = "gopher_oc@163.com";;
 		String smtpPort = null;
 		sender.setSmtpHost(smtpHost);
@@ -87,8 +88,8 @@ private Session getMailSession(){
 		sender.setSmtpUser(smtpUser);
 		sender.setDefaultSenderEmailAddress(smtpUser);
 		MessagePacket mp = new MessagePacket();
-	    mp.setContent("111 "+new Date());
-	    mp.setTitle("1111");
+	    mp.setContent("哈老你好啊aaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbbbcccccccccccccccc "+new Date());
+	    mp.setTitle("我是gopher sender[lucas.yue]");
 	    DefaultUser u=new DefaultUser();
 	    Collection<IUser>uList=new ArrayList();
 	    u.setEmail("405263645@qq.com");

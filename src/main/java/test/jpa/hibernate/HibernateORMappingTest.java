@@ -3,6 +3,7 @@ package test.jpa.hibernate;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Properties;
 
 import org.hibernate.Session;
@@ -14,6 +15,10 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.bstek.bdf2.core.model.DefaultUser;
+
+import test.jpa.hibernate.model.Account;
+import test.jpa.hibernate.model.Product;
+import test.jpa.hibernate.model.SaleAgencyPayAccount;
 
 public class HibernateORMappingTest {
     private static SessionFactory sessionFactory; 
@@ -30,6 +35,9 @@ public class HibernateORMappingTest {
     	cfg=new Configuration().addProperties(p);
     	//cfg.addAnnotatedClass(NoticeFlow.class);
         cfg.addAnnotatedClass(DefaultUser.class);
+        cfg.addAnnotatedClass(Product.class);
+        cfg.addAnnotatedClass(SaleAgencyPayAccount.class);
+        cfg.addAnnotatedClass(Account.class);
         //cfg.addAnnotatedClass(LogInfo.class);
         sessionFactory = cfg.buildSessionFactory();
     } 
@@ -49,18 +57,19 @@ public class HibernateORMappingTest {
     } 
     @Test
     public void testJoinColumn(){
-    	Session session=sessionFactory.openSession();
-    	String id="dd625fc4-12e5-4843-8ac8-ed4e9a2ec1ba";
-    	//NoticeFlow ntf=(NoticeFlow) session.load(NoticeFlow.class, id);
-//    	ntf.getAdministrator();
-//    	List<String>list=new ArrayList<String>();
-//    	list.add("0b4a2a9d-9d59-4c3d-9dd0-b44cb975b59f");
-//    	list.add(id);
-//    	List<NoticeFlow>ntFlows=session.createCriteria(NoticeFlow.class).add(Restrictions.in("id", list)).list();
-//    	Assert.notNull(ntf);
-//    	Assert.isTrue(ntf.getId().equals(id));
-//    	System.out.println(ntf.getOperationManager());
-//    	Assert.notNull(ntf.getOperationManagerUser());
+    	Session session=null;
+    	try{
+    		session=sessionFactory.openSession();
+        	String id="1372884e-7451-4c90-9a85-ed9c07509549";
+        	Product p = (Product) session.get(Product.class, id);
+        	System.out.println(p.getProductShortName());
+        	List<SaleAgencyPayAccount> list = p.getSaleAgencyPayAccounts();
+    	    System.out.println(list.get(0).getAccountName());
+    	    p.setSaleAgencyPayAccounts(null);
+    	}finally{
+    		session.flush();
+    		session.close();
+    	}
     }
     @Test
     public void testSelectIn(){
