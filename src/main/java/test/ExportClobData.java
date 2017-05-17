@@ -1,8 +1,11 @@
 package test;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Blob;
 import java.sql.Clob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,45 +14,109 @@ import java.sql.SQLException;
 
 public class ExportClobData {
     public static void main(String[] args) {
-    	getData();
+    	//getData();
+		temp();
 	}
-	public static void getData() {
+
+	private static void temp() {
 		Connection con=DBUtil.getCon();
-		try{
-			String sql="select code_,template_ from oc_notice_template";//where code_='setUpNoticeFollUpToInitInvest-RE'";
-			PreparedStatement ps=con.prepareStatement(sql);
-			ResultSet rs=ps.executeQuery();
-			int count=0;
-			while(rs.next()){
-				String code=rs.getString("code_");
-				Clob clob=rs.getClob("template_");
-				if(clob.length()>0){
-					saveToFile("noticeTemplate",code,clob);
-					count++;
-				}
-			}
-			System.out.println("共导出公告模板数据"+count+"条");
-			count=0;
-			String sql2="select id_,template_ from oc_email_template where category_id_='Notice'";
-			ps=con.prepareStatement(sql2);
-			rs=ps.executeQuery();
-			while(rs.next()){
-				String code=rs.getString("id_");
-				Clob clob=rs.getClob("template_");
-				if(clob.length()>0){
-					saveToFile("noticeEmailTemplate",code,clob);
-					count++;
-				}
-			}
-			System.out.println("共导出公告Email模板数据"+count+"条");
-			rs.close();
-			ps.close();
+    	String codeFiled = "id_";
+		String clobField = "blob_value_";
+		String sql = "select " + codeFiled + ","+ clobField +" from uflo_blob where name_ like 'ProductRaise%'";
+		try {
+			getBlobData(con, sql, codeFiled, clobField, "uflo_blob");
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally{
+		} finally{
 			DBUtil.releaseCon(con);
 		}
 	}
+    
+	public static void getData() {
+		Connection con=DBUtil.getCon();
+		try{
+			String codeFiled = "code_";
+			String clobField = "template_";
+			String sql = "select " + codeFiled + ","+ clobField +" from oc_notice_template";//where code_='setUpNoticeFollUpToInitInvest-RE'";
+			getClobData(con, sql, codeFiled, clobField, "noticeTemplate");
+			codeFiled = "id_";
+			clobField = "template_";
+			sql = "select " + codeFiled + ","+ clobField +" from oc_email_template where category_id_='Notice'";//where code_='setUpNoticeFollUpToInitInvest-RE'";
+			getClobData(con, sql, codeFiled, clobField, "Email");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			DBUtil.releaseCon(con);
+		}
+	}
+	private static void getBlobData(Connection con, String sql, String codeFiled, String clobFiled, String type) throws SQLException {
+		PreparedStatement ps=con.prepareStatement(sql);
+		ResultSet rs=ps.executeQuery();
+		int count=0;
+		while(rs.next()){
+			String code=rs.getString(codeFiled);
+			Blob blob=rs.getBlob(clobFiled);
+			if(blob.length()>0){
+				saveToFile(type, code, blob);
+				count++;
+			}
+		}
+		System.out.println("共导出"+type+"数据"+count+"条");
+		rs.close();
+		ps.close();
+	}
+	
+	private static void getClobData(Connection con, String sql, String codeFiled, String clobFiled, String type) throws SQLException {
+		PreparedStatement ps=con.prepareStatement(sql);
+		ResultSet rs=ps.executeQuery();
+		int count=0;
+		while(rs.next()){
+			String code=rs.getString(codeFiled);
+			Clob clob=rs.getClob(clobFiled);
+			if(clob.length()>0){
+				saveToFile(type, code, clob);
+				count++;
+			}
+		}
+		System.out.println("共导出"+type+"数据"+count+"条");
+		rs.close();
+		ps.close();
+	}
+	
+	private static void saveToFile(String dir,String code, Blob blob) {
+		File fd=new File("D:\\projects\\nuoya\\transferData\\"+dir);
+		if(!fd.exists()){
+			fd.mkdir();
+		}
+		File f=new File("D:\\projects\\nuoya\\transferData\\"+dir+"\\"+code+".html");
+		FileOutputStream fos=null;
+		try {
+			f.createNewFile();
+			fos=new FileOutputStream(f);
+			InputStream is = blob.getBinaryStream();
+			//long size=((BLOB)blob).getBufferSize();
+			//OracleBlob oblob = (OracleBlob) blob;
+			byte[] buffer = new byte[1024];
+			int len = 0;
+			while ((len = is.read(buffer)) != -1) {
+			    fos.write(buffer, 0, len);
+			}
+			fos.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			if(fos!=null){
+				try {
+					fos.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
 	private static void saveToFile(String dir,String code, Clob clob) {
 		File f=new File("D:\\projects\\nuoya\\transferData\\"+dir+"\\"+code+".html");
 		FileWriter fw=null;
