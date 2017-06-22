@@ -3,8 +3,8 @@ package test.jpa.hibernate;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -63,8 +63,8 @@ public class HibernateORMappingTest {
         	String id="1372884e-7451-4c90-9a85-ed9c07509549";
         	Product p = (Product) session.get(Product.class, id);
         	System.out.println(p.getProductShortName());
-        	List<SaleAgencyPayAccount> list = p.getSaleAgencyPayAccounts();
-    	    System.out.println(list.get(0).getAccountName());
+        	Set<SaleAgencyPayAccount> list = p.getSaleAgencyPayAccounts();
+    	    //System.out.println(list.get(0).getAccountName());
     	    p.setSaleAgencyPayAccounts(null);
     	}finally{
     		session.flush();

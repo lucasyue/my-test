@@ -2,6 +2,7 @@ package test.jpa.hibernate.model;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -23,7 +24,7 @@ import com.bstek.dorado.annotation.PropertyDef;
  *@since 2015年6月24日
  */
 @Entity
-@Table(name = "OC_PRODUCT")
+@Table(name = "OC_PRODUCT1")
 public class Product implements Serializable{
 	@Id
 	@PropertyDef(label = "主键")
@@ -37,17 +38,11 @@ public class Product implements Serializable{
 	@PropertyDef(label = "产品简称")
 	@Column(name = "PRODUCT_SHORT_NAME_")
 	private String productShortName;
-	@PropertyDef(label = "产品代码")
-	@Column(name = "PRODUCT_CODE_")
-	private String productCode;
-	@PropertyDef(label = "运营经理")	
-	@Column(name = "OPERATION_MANAGER_")
-	private String operationManager;
 	@ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)  
-	@JoinTable(name = "OC_PRODUCT_SAPA", joinColumns ={@JoinColumn(name = "PRODUCT_ID_", insertable = false, updatable = false)}, inverseJoinColumns = { @JoinColumn(name = "SALE_AGENCY_PAY_ACCOUNT_ID_", insertable = false, updatable = false)}) 	
+	@JoinTable(name = "OC_PRODUCT_SAPA1", joinColumns ={@JoinColumn(name = "PRODUCT_ID_", insertable = false, updatable = false)}, inverseJoinColumns = { @JoinColumn(name = "SALE_AGENCY_PAY_ACCOUNT_ID_", insertable = false, updatable = false)}) 	
 	@Fetch(FetchMode.SUBSELECT)
 	@PropertyDef(label = "销售机构缴款账户")
-	private List<SaleAgencyPayAccount> saleAgencyPayAccounts;
+	private Set<SaleAgencyPayAccount> saleAgencyPayAccounts;
 	public String getId() {
 		return id;
 	}
@@ -60,22 +55,10 @@ public class Product implements Serializable{
 	public void setProductShortName(String productShortName) {
 		this.productShortName = productShortName;
 	}
-	public String getProductCode() {
-		return productCode;
-	}
-	public void setProductCode(String productCode) {
-		this.productCode = productCode;
-	}
-	public String getOperationManager() {
-		return operationManager;
-	}
-	public void setOperationManager(String operationManager) {
-		this.operationManager = operationManager;
-	}
-	public List<SaleAgencyPayAccount> getSaleAgencyPayAccounts() {
+	public Set<SaleAgencyPayAccount> getSaleAgencyPayAccounts() {
 		return saleAgencyPayAccounts;
 	}
-	public void setSaleAgencyPayAccounts(List<SaleAgencyPayAccount> saleAgencyPayAccounts) {
+	public void setSaleAgencyPayAccounts(Set<SaleAgencyPayAccount> saleAgencyPayAccounts) {
 		this.saleAgencyPayAccounts = saleAgencyPayAccounts;
 	}
 	

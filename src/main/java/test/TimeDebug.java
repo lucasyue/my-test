@@ -34,6 +34,9 @@ public class TimeDebug{
 	public void debug(String msg){
 		this.debug(msg, this.debug);
 	}
+	public void debugStep(int step){
+		this.debug(" ["+step+"]......", this.debug);
+	}
 	public void debug(String msg,String debug){
 		if("debug".equals(debug)){
 			SimpleDateFormat sdf=new SimpleDateFormat("HH:mm:ss SSS");

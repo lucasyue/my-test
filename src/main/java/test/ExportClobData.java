@@ -14,11 +14,11 @@ import java.sql.SQLException;
 
 public class ExportClobData {
     public static void main(String[] args) {
-    	//getData();
-		temp();
+    	exportClobTemplate();
+		//exportUFLOData();
 	}
 
-	private static void temp() {
+	private static void exportUFLOData() {
 		Connection con=DBUtil.getCon();
     	String codeFiled = "id_";
 		String clobField = "blob_value_";
@@ -32,17 +32,17 @@ public class ExportClobData {
 		}
 	}
     
-	public static void getData() {
+	public static void exportClobTemplate() {
 		Connection con=DBUtil.getCon();
 		try{
 			String codeFiled = "code_";
 			String clobField = "template_";
-			String sql = "select " + codeFiled + ","+ clobField +" from oc_notice_template";//where code_='setUpNoticeFollUpToInitInvest-RE'";
-			getClobData(con, sql, codeFiled, clobField, "noticeTemplate");
+			String sql = "select " + codeFiled + ","+ clobField +" from oc_notice_template where code_ in('incomeDistributionSMS-PE','incomeDistributionSMS-RE','maturityDistributionSMS-RE','AdvDelayDueToDistributionSMS-RE')";//where code_='setUpNoticeFollUpToInitInvest-RE'";
+			getClobData(con, sql, codeFiled, clobField, "noticeTemplate1");
 			codeFiled = "id_";
 			clobField = "template_";
-			sql = "select " + codeFiled + ","+ clobField +" from oc_email_template where category_id_='Notice'";//where code_='setUpNoticeFollUpToInitInvest-RE'";
-			getClobData(con, sql, codeFiled, clobField, "Email");
+			//sql = "select " + codeFiled + ","+ clobField +" from oc_email_template where category_id_='Notice'";//where code_='setUpNoticeFollUpToInitInvest-RE'";
+			//getClobData(con, sql, codeFiled, clobField, "Email");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally{
@@ -118,6 +118,10 @@ public class ExportClobData {
 	}
 	
 	private static void saveToFile(String dir,String code, Clob clob) {
+		File fdir=new File("D:\\projects\\nuoya\\transferData\\"+dir);
+		if(!fdir.exists()){
+			fdir.mkdir();
+		}
 		File f=new File("D:\\projects\\nuoya\\transferData\\"+dir+"\\"+code+".html");
 		FileWriter fw=null;
 		try {

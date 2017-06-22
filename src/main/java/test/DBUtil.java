@@ -9,7 +9,7 @@ public class DBUtil {
 		try {
 			String driver="oracle.jdbc.driver.OracleDriver";
 			String url="jdbc:oracle:thin:@10.21.200.161:1521:ORCL";
-			String user="ocuat";
+			String user="octest";
 			Class.forName(driver);
 			Connection con=DriverManager.getConnection(url, user,user);
 			return con;

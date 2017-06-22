@@ -19,9 +19,9 @@ public class SFTPUploader {
      * @param args
      * @throws Exception
      */
-    String localBaseDir = "D:\\projects\\nuoya\\升级代码\\auto-upload";
-    String remoteBaseDir1 = "/usr/local/tomcat-7.0.39/webapps/oc/WEB-INF/classes"; // 目标文件名
-    String remoteBaseDir = remoteBaseDir1 + "/com/gopher/oc"; // 目标文件名
+//    String localBaseDir = "D:\\projects\\nuoya\\升级代码\\auto-upload";
+//    String remoteBaseDir1 = "/usr/local/tomcat-7.0.39/webapps/oc/WEB-INF/classes"; // 目标文件名
+//    String remoteBaseDir = remoteBaseDir1 + "/com/gopher/oc"; // 目标文件名
     int count = 0;
     int errorCount = 0;
     static SFTPUploader deployer = new SFTPUploader();
@@ -36,18 +36,24 @@ public class SFTPUploader {
     }
     public static void main(String[] args) throws Exception {
 //    	deployToUAT();
-		deployToSIT();
+		//deployToSIT("oc_sit_515");
+		//deployToSIT("oc_sit_527");
+		//deployToSIT("ws\\20170602\\oc_sit_062");
+		//deployToSIT("ws\\20170531\\oc_sit_531");
+		deployToSIT("ws\\20170527\\oc_sit_527");
     }
-    private static void deployToSIT() {
-    	String localSitDir = "D:\\projects\\nuoya\\oc_sit_515\\build\\classes";
+    private static void deployToSIT(String version) {
+    	String localSitDir = "D:\\projects\\nuoya\\"+version+"\\build\\classes";
     	String remoteSitDir = "/usr/local/tomcat-7.0.39/webapps/oc/WEB-INF/classes"; // 目标文件名
     	deployLocalToRemote(localSitDir, remoteSitDir);
     }
-	@SuppressWarnings("unused")
 	private static void deployToUAT() {
-		String localBaseDir = "D:/projects/nuoya/oc_uat_515/build/classes";
-    	String remoteBaseDir = "/usr/local/tomcat-7.0.39/webapps/oc/WEB-INF/classes"; // 目标文件名
+		String localBaseDir = "D:\\projects\\nuoya\\oc_uat_515\\build\\classes";
+    	String remoteBaseDir = "/usr/local/ocuat-tomcat-7.0.39/webapps/oc/WEB-INF/classes"; // 目标文件名
     	deployLocalToRemote(localBaseDir, remoteBaseDir);
+		String localBaseDir2 = "D:\\projects\\nuoya\\oc_uat_515\\web\\WEB-INF\\template";
+    	String remoteBaseDir2 = "/usr/local/ocuat-tomcat-7.0.39/webapps/oc/WEB-INF/template"; // 目标文件名
+    	deployLocalToRemote(localBaseDir2, remoteBaseDir2);
 	}
 	private static void deployLocalToRemote(String localBaseDir, String remoteBaseDir) {
 		SFTPChannel channel = deployer.getSFTPChannel();
@@ -80,11 +86,11 @@ public class SFTPUploader {
 			e.printStackTrace();
 		}
 	}
-	@SuppressWarnings("unused")
+	/*@SuppressWarnings("unused")
 	private static void deployToSIT1() throws JSchException, Exception {
 		SFTPChannel channel = deployer.getSFTPChannel();
         ChannelSftp chSftp = channel.getChannel(sftpDetails, 60000);
-        /**
+        *//**
          * 代码段1
         OutputStream out = chSftp.put(dst, ChannelSftp.OVERWRITE); // 使用OVERWRITE模式
         byte[] buff = new byte[1024 * 256]; // 设定每次传输的数据块大小为256KB
@@ -101,7 +107,7 @@ public class SFTPUploader {
             } while (read >= 0);
             System.out.println("input stream read done.");
         }
-        **/
+        **//*
         File localBaseDirFile = new File(deployer.localBaseDir);
         Map<String, String> upFiles = new HashMap<String, String>();
         deployer.getDstPaths(localBaseDirFile, upFiles);
@@ -122,7 +128,7 @@ public class SFTPUploader {
         // chSftp.put(new FileInputStream(src), dst, ChannelSftp.OVERWRITE); // 代码段3
         chSftp.quit();
         channel.closeChannel();
-	}
+	}*/
     private void getRemoteDstPaths(String localBaseDir, File localBaseDirFile, String remoteDir, Map<String, String>dstPaths){
     	File[] upFiles = localBaseDirFile.listFiles();
         for(File upFile : upFiles){
@@ -134,7 +140,7 @@ public class SFTPUploader {
             }
         }
     }
-    private void getDstPaths(File localBaseDirFile, Map<String, String>dstPaths){
+    /*private void getDstPaths(File localBaseDirFile, Map<String, String>dstPaths){
     	File[] upFiles = localBaseDirFile.listFiles();
         for(File upFile : upFiles){
             if(upFile.isDirectory()){
@@ -149,5 +155,5 @@ public class SFTPUploader {
             	}
             }
         }
-    }
+    }*/
 }

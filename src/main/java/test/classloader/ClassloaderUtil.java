@@ -49,7 +49,7 @@ public class ClassloaderUtil {
   
                 classLoaderDetail  
                                 .append("\n-----------------------------------------------------------------\n");  
-  
+                System.out.println(classLoaderDetail.toString());
                 return classLoaderDetail.toString();  
   
         }  
