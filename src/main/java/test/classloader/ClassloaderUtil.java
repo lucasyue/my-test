@@ -12,7 +12,7 @@ public class ClassloaderUtil {
                 ClassLoader currentClassLoader = Thread.currentThread()  
                                 .getContextClassLoader();  
   
-                classLoaderDetail  
+                classLoaderDetail
                                 .append("\n-----------------------------------------------------------------\n");  
   
                 // Build a Stack of the current ClassLoader chain  
