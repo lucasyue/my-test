@@ -84,11 +84,11 @@ public class ExportClobData {
 	}
 	
 	private static void saveToFile(String dir,String code, Blob blob) {
-		File fd=new File("D:\\projects\\nuoya\\transferData\\"+dir);
+		File fd=new File("D:\\projects\\bsdn\\transferData\\"+dir);
 		if(!fd.exists()){
 			fd.mkdir();
 		}
-		File f=new File("D:\\projects\\nuoya\\transferData\\"+dir+"\\"+code+".html");
+		File f=new File("D:\\projects\\bsdn\\transferData\\"+dir+"\\"+code+".html");
 		FileOutputStream fos=null;
 		try {
 			f.createNewFile();
@@ -118,11 +118,11 @@ public class ExportClobData {
 	}
 	
 	private static void saveToFile(String dir,String code, Clob clob) {
-		File fdir=new File("D:\\projects\\nuoya\\transferData\\"+dir);
+		File fdir=new File("D:\\projects\\bsdn\\transferData\\"+dir);
 		if(!fdir.exists()){
 			fdir.mkdir();
 		}
-		File f=new File("D:\\projects\\nuoya\\transferData\\"+dir+"\\"+code+".html");
+	 File f=new File("D:\\projects\\bsdn\\transferData\\"+dir+"\\"+code+".html");
 		FileWriter fw=null;
 		try {
 			f.createNewFile();
