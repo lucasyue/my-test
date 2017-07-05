@@ -43,15 +43,15 @@ public class SFTPUploader {
 		deployToSIT("ws\\20170527\\oc_sit_527");
     }
     private static void deployToSIT(String version) {
-    	String localSitDir = "D:\\projects\\nuo\\"+version+"\\build\\classes";
+    	String localSitDir = "D:\\projects\\bsdn\\"+version+"\\build\\classes";
     	String remoteSitDir = "/usr/local/tomcat-7.0.39/webapps/test/WEB-INF/classes"; // 目标文件名
     	deployLocalToRemote(localSitDir, remoteSitDir);
     }
 	private static void deployToUAT() {
-		String localBaseDir = "D:\\projects\\nuo\\test_uat_515\\build\\classes";
+		String localBaseDir = "D:\\projects\\bsdn\\test_uat_515\\build\\classes";
 		String remoteBaseDir = "/usr/local/bsdn-tomcat-7.0.39/webapps/test/WEB-INF/classes"; // 目标文件名
     	deployLocalToRemote(localBaseDir, remoteBaseDir);
-		String localBaseDir2 = "D:\\projects\\nuo\\bsdn_uat_515\\web\\WEB-INF\\template";
+		String localBaseDir2 = "D:\\projects\\bsdn\\bsdn_uat_515\\web\\WEB-INF\\template";
     	String remoteBaseDir2 = "/usr/local/bsdn-tomcat-7.0.39/webapps/bsdn/WEB-INF/template"; // 目标文件名
     	deployLocalToRemote(localBaseDir2, remoteBaseDir2);
 	}
