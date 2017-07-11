@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ViewConfig>
+  <Arguments/>
+  <Context/>
+  <Model>
+    <DataType name="TkList">
+      <PropertyDef name="name"/>
+      <PropertyDef name="value"/>
+      <PropertyDef name="state"/>
+      <PropertyDef name="editorType"/>
+      <PropertyDef name="param"/>
+    </DataType>
+  </Model>
+  <View>
+    <DataSet id="dataSetTkList">
+      <ClientEvent name="onReady">self.setData([{name:'分红公式',value:'123',state:0,editorType:'TextEditor'},{name:'分红天数',value:'10',state:0,editorType:'TextArea'},{name:'认缴实缴是否一致',value:'1',state:1,editorType:'RadioGroup'}]);</ClientEvent>
+      <Property name="dataType">[TkList]</Property>
+    </DataSet>
+    <DataGrid id="dataGridTkList">
+      <ClientEvent name="onReady">var CellRenderer = $extend(dorado.widget.grid.SubControlCellRenderer, {&#xD;
+    createSubControl : function(arg) {&#xD;
+        var entity = arg.data;&#xD;
+        var editor = getEditor(entity);&#xD;
+        if (editor) {&#xD;
+            editor.set(&quot;width&quot;, &quot;100%&quot;);&#xD;
+        }&#xD;
+        return editor;&#xD;
+    },&#xD;
+    refreshSubControl : function(editor, arg) {&#xD;
+        if (editor)&#xD;
+            editor.set(&quot;value&quot;, arg.data.get(&quot;value&quot;));&#xD;
+    }&#xD;
+});&#xD;
+function getEditor(entity) {&#xD;
+    var editorType = entity.get(&quot;editorType&quot;), param = entity.get(&quot;param&quot;);&#xD;
+    if (!editorType) {&#xD;
+        return null;&#xD;
+    }&#xD;
+    var editor = eval(&quot;new dorado.widget.&quot; + editorType + &quot;()&quot;);&#xD;
+    if (editor instanceof dorado.widget.TextEditor) {&#xD;
+        if (param) {&#xD;
+            var trigger;&#xD;
+            if (param == &quot;date&quot;) {&#xD;
+                trigger = &quot;defaultDateDropDown&quot;;&#xD;
+            } else if (param == &quot;dateTime&quot;) {&#xD;
+                trigger = &quot;defaultDateTimeDropDown&quot;;&#xD;
+            } else {&#xD;
+                trigger = new dorado.widget.ListDropDown({&#xD;
+                    items : parseParam(param),&#xD;
+                    property : &quot;value&quot;&#xD;
+                });&#xD;
+            }&#xD;
+            editor.set(&quot;trigger&quot;, trigger);&#xD;
+        }&#xD;
+    } else if (editor instanceof dorado.widget.CheckBox) {&#xD;
+        editor.set(&quot;exClassName&quot;, &quot;d-checkbox-center&quot;)&#xD;
+    } else if (editor instanceof dorado.widget.RadioGroup) {&#xD;
+        editor.set(&quot;layout&quot;, &quot;flow&quot;);&#xD;
+            var radioButtons = [];&#xD;
+                radioButtons.push({&#xD;
+                    value : 1,&#xD;
+                    text : '是'&#xD;
+                });&#xD;
+                radioButtons.push({&#xD;
+                    value : 0,&#xD;
+                    text : '否'&#xD;
+                });&#xD;
+         editor.set(&quot;radioButtons&quot;, radioButtons);&#xD;
+    } else if (editor instanceof dorado.widget.TextArea) {&#xD;
+        editor.set(&quot;height&quot;, 45);&#xD;
+    } else if (editor instanceof dorado.widget.DateTimeSpinner) {&#xD;
+        editor.set({&#xD;
+            type : param&#xD;
+        });&#xD;
+    } else if (editor instanceof dorado.widget.CustomSpinner) {&#xD;
+        editor.set(&quot;pattern&quot;, param);&#xD;
+    }&#xD;
+    return editor;&#xD;
+}&#xD;
+self.set(&quot;#value.renderer&quot;,new CellRenderer());</ClientEvent>
+      <Property name="dataSet">dataSetTkList</Property>
+      <Property name="rowHeight">50</Property>
+      <Property name="highlightCurrentRow">false</Property>
+      <DataColumn name="name">
+        <Property name="property">name</Property>
+      </DataColumn>
+      <DataColumn name="value">
+        <Property name="property">value</Property>
+        <Property name="readOnly">true</Property>
+      </DataColumn>
+      <DataColumn name="state">
+        <Property name="property">state</Property>
+      </DataColumn>
+      <DataColumn name="editorType">
+        <Property name="property">editorType</Property>
+      </DataColumn>
+      <DataColumn name="param">
+        <Property name="property">param</Property>
+      </DataColumn>
+    </DataGrid>
+  </View>
+</ViewConfig>
