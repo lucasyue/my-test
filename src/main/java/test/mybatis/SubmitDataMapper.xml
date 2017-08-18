@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="test.mybatis.SubmitDataMapper" >
+  <resultMap id="BaseResultMap" type="test.mybatis.TblRskReportLog" >
+    <id column="LOG_ID" property="logId" jdbcType="VARCHAR" />
+    <result column="REPORT_NAME" property="reportName" jdbcType="VARCHAR" />
+    <result column="IMPORT_TIME" property="importTime" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="IS_DELETED" property="isDeleted" jdbcType="CHAR" />
+    <result column="CREATED_BY_ID" property="createdById" jdbcType="VARCHAR" />
+    <result column="CREATED_TIME" property="createdTime" jdbcType="TIMESTAMP" />
+    <result column="LAST_MODIFIED_BY_ID" property="lastModifiedById" jdbcType="VARCHAR" />
+    <result column="LAST_MODIFIED_TIME" property="lastModifiedTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    LOG_ID, REPORT_NAME, IMPORT_TIME, REMARK, IS_DELETED, CREATED_BY_ID, CREATED_TIME, 
+    LAST_MODIFIED_BY_ID, LAST_MODIFIED_TIME
+  </sql>
+  <select id="querySubmitdataByPager" resultMap="BaseResultMap" parameterType="test.mybatis.Pager" >
+    select
+    <include refid="Base_Column_List" />
+    from TBL_RSK_REPORT_LOG
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

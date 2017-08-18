@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="test.mybatis.ModeMapper">
+  <resultMap id="ModeResultMap" type="test.mybatis.ModeEntity">
+        <result column="MODE_ID" property="modeId" jdbcType="VARCHAR" />
+        <result column="PARENT_MODE_ID" property="parentModeId" jdbcType="VARCHAR" />
+        <result column="MODE_NAME" property="modeName" jdbcType="VARCHAR" />
+        <result column="MODE_CODE" property="modeCode" jdbcType="VARCHAR" />
+        <result column="MODE_TYPE" property="modeType" jdbcType="VARCHAR" />
+        <result column="MODE_STATUS" property="modeStatus" jdbcType="VARCHAR" />
+        <result column="ORG_ID" property="orgId" jdbcType="DECIMAL" />
+        <result column="PRODUCT_MANAGER" property="productManager" jdbcType="VARCHAR" />
+        <result column="PRODUCT_DIRECTOR" property="productDirector" jdbcType="VARCHAR" />
+        <result column="MODE_DESC" property="modeDesc" jdbcType="VARCHAR" />
+        <result column="CAPITAL_LOGIC_DESC" property="capitalLogicDesc" jdbcType="VARCHAR" />
+        <result column="PROFIT_ANALYSIS" property="profitAnalysis" jdbcType="VARCHAR" />
+        <result column="SURVIVAL_MECHANISM" property="survivalMechanism" jdbcType="VARCHAR" />
+        <result column="TRADE_RIVALS_UNICODE" property="tradeRivalsUnicode" jdbcType="VARCHAR" />
+        <result column="TRADE_RIVALS_NAME" property="tradeRivalsName" jdbcType="VARCHAR" />
+        <result column="TRADE_RIVALS_DESC" property="tradeRivalsDesc" jdbcType="VARCHAR" />
+        <result column="BIZ_GROUP" property="bizGroup" jdbcType="VARCHAR" />
+        <result column="IS_DELETED" property="isDeleted" jdbcType="CHAR" />
+        <result column="CREATED_BY_ID" property="createdById" jdbcType="VARCHAR" />
+        <result column="CREATED_TIME" property="createdTime" jdbcType="TIMESTAMP" />
+        <result column="LAST_MODIFIED_BY_ID" property="lastModifiedById" jdbcType="VARCHAR" />
+        <result column="LAST_MODIFIED_TIME" property="lastModifiedTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <select id="selectMode" parameterType="String" resultMap="ModeResultMap">
+    select * from TBL_RSK_MODE where mode_id = #{modeId}
+  </select>
+</mapper>
