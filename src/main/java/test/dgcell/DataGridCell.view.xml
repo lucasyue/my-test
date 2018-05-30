@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ViewConfig>
+  <Arguments/>
+  <Context/>
+  <Model>
+    <DataType name="dataType1">
+      <PropertyDef name="id"/>
+      <PropertyDef name="name"/>
+    </DataType>
+  </Model>
+  <View>
+    <DataSet id="dataSet1">
+      <ClientEvent name="onReady">self.setData([{id:'001',name:'name1'},{id:'002',name:'name2'},{id:'003',name:'name3'}])</ClientEvent>
+      <Property name="dataType">[dataType1]</Property>
+    </DataSet>
+    <DataGrid>
+      <Property name="dataSet">dataSet1</Property>
+      <Property name="autoCreateColumns">true</Property>
+      <Property name="readOnly">true</Property>
+      <DataColumn name="id">
+        <Property name="property">id</Property>
+      </DataColumn>
+      <DataColumn name="name">
+        <Property name="property">name</Property>
+      </DataColumn>
+      <DataColumn>
+        <ClientEvent name="onRenderCell">var id = arg.data.get('id');&#xD;
+if (id == '001') {&#xD;
+    $(arg.dom).empty().xCreate({&#xD;
+        tagName: &quot;IMG&quot;,&#xD;
+        src: $url(&quot;>dorado/res/test/dgcell/close.gif&quot;),&#xD;
+        style: &quot;margin: 2px&quot;,&#xD;
+            onclick: function(self, arg){&#xD;
+                alert(self);&#xD;
+            }&#xD;
+    });&#xD;
+}&#xD;
+else {&#xD;
+        $(arg.dom).empty().xCreate({&#xD;
+            tagName: &quot;IMG&quot;,&#xD;
+            src: $url(&quot;>dorado/res/test/dgcell/point.png&quot;),&#xD;
+            style: &quot;margin: 2px&quot;,&#xD;
+            onclick: function(self, arg){&#xD;
+                alert(self);&#xD;
+            }&#xD;
+        });&#xD;
+    }</ClientEvent>
+        <Property name="name">del</Property>
+        <Editor/>
+      </DataColumn>
+    </DataGrid>
+  </View>
+</ViewConfig>
