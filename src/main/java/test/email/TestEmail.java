@@ -92,7 +92,7 @@ private Session getMailSession(){
 	    mp.setTitle("我是gopher sender[lucas.yue]");
 	    DefaultUser u=new DefaultUser();
 	    Collection<IUser>uList=new ArrayList();
-	    u.setEmail("405263645@qq.com");
+	    u.setEmail("yyj0y01@sp.noahwm.com");
 	    uList.add(u);
 	    mp.setTo(uList);
 		try {

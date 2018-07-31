@@ -14,15 +14,15 @@ import java.sql.SQLException;
 
 public class ExportClobData {
     public static void main(String[] args) {
-    	exportClobTemplate();
-		//exportUFLOData();
+        //exportClobTemplate();
+		exportUFLOData();
 	}
 
 	private static void exportUFLOData() {
 		Connection con=DBUtil.getCon();
     	String codeFiled = "id_";
 		String clobField = "blob_value_";
-		String sql = "select " + codeFiled + ","+ clobField +" from uflo_blob where name_ like 'ProductRaise%'";
+		String sql = "select " + codeFiled + ","+ clobField +" from uflo_blob where name_ is not null and process_id_ not in('223','158141','263141','20386')";
 		try {
 			getBlobData(con, sql, codeFiled, clobField, "uflo_blob");
 		} catch (SQLException e) {

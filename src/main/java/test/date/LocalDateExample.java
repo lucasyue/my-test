@@ -1,9 +1,5 @@
 package test.date;
 
-import java.time.LocalDate;
-import java.time.Month;
-import java.time.ZoneId;
-
 public class LocalDateExample {
  
     public static void main(String[] args) {

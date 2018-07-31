@@ -8,4 +8,6 @@ public class Util{
 		SimpleDateFormat sdf=new SimpleDateFormat(pattern);
 		return sdf.format(date);
 	}
+	public static void main(String[] args) {
+	}
 }
