@@ -14,8 +14,8 @@ import java.sql.SQLException;
 
 public class ExportClobData {
     public static void main(String[] args) {
-        //exportClobTemplate();
-		exportUFLOData();
+    	exportClobTemplate();
+		//exportUFLOData();
 	}
 
 	private static void exportUFLOData() {
@@ -23,6 +23,7 @@ public class ExportClobData {
     	String codeFiled = "id_";
 		String clobField = "blob_value_";
 		String sql = "select " + codeFiled + ","+ clobField +" from uflo_blob where name_ is not null and process_id_ not in('223','158141','263141','20386')";
+		//		String sql = "select " + codeFiled + ","+ clobField +" from uflo_blob where name_ like 'ProductRaise%'";
 		try {
 			getBlobData(con, sql, codeFiled, clobField, "uflo_blob");
 		} catch (SQLException e) {
@@ -84,11 +85,11 @@ public class ExportClobData {
 	}
 	
 	private static void saveToFile(String dir,String code, Blob blob) {
-		File fd=new File("D:\\projects\\nuoya\\transferData\\"+dir);
+		File fd=new File("D:\\projects\\bsdn\\transferData\\"+dir);
 		if(!fd.exists()){
 			fd.mkdir();
 		}
-		File f=new File("D:\\projects\\nuoya\\transferData\\"+dir+"\\"+code+".html");
+		File f=new File("D:\\projects\\bsdn\\transferData\\"+dir+"\\"+code+".html");
 		FileOutputStream fos=null;
 		try {
 			f.createNewFile();
@@ -118,11 +119,11 @@ public class ExportClobData {
 	}
 	
 	private static void saveToFile(String dir,String code, Clob clob) {
-		File fdir=new File("D:\\projects\\nuoya\\transferData\\"+dir);
+		File fdir=new File("D:\\projects\\bsdn\\transferData\\"+dir);
 		if(!fdir.exists()){
 			fdir.mkdir();
 		}
-		File f=new File("D:\\projects\\nuoya\\transferData\\"+dir+"\\"+code+".html");
+	 File f=new File("D:\\projects\\bsdn\\transferData\\"+dir+"\\"+code+".html");
 		FileWriter fw=null;
 		try {
 			f.createNewFile();
