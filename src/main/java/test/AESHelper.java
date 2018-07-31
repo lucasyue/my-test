@@ -2,7 +2,7 @@ package test;
 
 /**
  * AESHelper.java
- * com.gopher.oc
+ * cn.bsdn.oc
  *
  * Function： TODO 
  *
@@ -42,8 +42,8 @@ public class AESHelper{
 	 * @since v1.0
 	 */
 	public static void main(String[] args) {
-		String content = "/com.gopher.oc.view.notice.NoticeReview.d?&processInstanceId=241304&businessId=8da997ca-8041-4326-a8a3-949e5c19caa8&taskId=241348&assignee=notice01";
-		String content2 = "com.gopher.oc.view.notice.NoticeReview.d?&processInstanceId=241304&businessId=8da997ca-8041-4326-a8a3-949e5c19caa8&taskId=241348&assignee=notice01";
+		String content = "/cn.bsdn.oc.view.notice.NoticeReview.d?&processInstanceId=241304&businessId=8da997ca-8041-4326-a8a3-949e5c19caa8&taskId=241348&assignee=notice01";
+		String content2 = "cn.bsdn.oc.view.notice.NoticeReview.d?&processInstanceId=241304&businessId=8da997ca-8041-4326-a8a3-949e5c19caa8&taskId=241348&assignee=notice01";
 		String password = "12345678";
 		System.out.println(encryptStr(content, password));
 		System.out.println(encryptStr(content2, password));

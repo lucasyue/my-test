@@ -8,7 +8,7 @@
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
 	http://www.bstek.com/bdf/schema http://www.bstek.com/dorado/schema/bdf2.0.xsd ">
 	<bean class="com.bstek.dorado.dao.hibernate.HibernateUtils"/>
-	<context:component-scan base-package="com.gopher.oc"></context:component-scan>
+	<context:component-scan base-package="cn.bsdn.oc"></context:component-scan>
 	<context:component-scan base-package="test"></context:component-scan>
 	<bean id="transactionManager" class="com.bstek.bdf2.core.orm.transaction.JdbcTransactionManager">
 		<property name="dataSource" ref="dataSource" />
@@ -61,7 +61,7 @@
 		</property>
 		<property name="packagesToScan">
 			<array>
-				<value>com.gopher.oc.model</value>
+				<value>cn.bsdn.oc.model</value>
 				<value>com.bstek.dorado.log.model</value>
 				<value>com.bstek.dorado.importer.model</value>
 			</array>
@@ -69,15 +69,15 @@
 		<property name="eventListeners"> 
 			<map>
 				<entry key="save-update">
-					<bean class="com.gopher.oc.listener.EnhanceSaveOrUpdateEventListener">
+					<bean class="cn.bsdn.oc.listener.EnhanceSaveOrUpdateEventListener">
 					</bean>
 				</entry>
 				<entry key="save">
-					<bean class="com.gopher.oc.listener.EnhanceSaveEventListener">
+					<bean class="cn.bsdn.oc.listener.EnhanceSaveEventListener">
 					</bean>
 				</entry>
 				<entry key="update">
-					<bean class="com.gopher.oc.listener.EnhanceUpdateEventListener">
+					<bean class="cn.bsdn.oc.listener.EnhanceUpdateEventListener">
 					</bean>
 				</entry>
 			</map>
@@ -115,7 +115,7 @@
 		</property>
 		<property name="packagesToScan">
 			<array>
-				<value>com.gopher.oc.bua.model</value>
+				<value>cn.bsdn.oc.bua.model</value>
 			</array>
 		</property>
 	</bean>

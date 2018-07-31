@@ -1,21 +1,8 @@
-/**
- * Project Name:risk-dao
- * File Name:ModeEntity.java
- * Package Name:com.noahwm.risk.dao.model.mode
- * Date:2016年11月24日下午4:13:47
- * Copyright (c) 2016, telen.wang All Rights Reserved.
- *
- */
 package test.mybatis;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
-/**
- * 模式数据实体对象(同样适用于子模式)
- * @author way8147
- * @version 
- */
 public class ModeEntity {
 	
 	private String modeId;

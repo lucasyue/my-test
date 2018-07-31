@@ -29,7 +29,7 @@ public class TestEmail {
 		new TestEmail().main1();
 	}
 	public void main2() throws MessagingException, UnsupportedEncodingException {
-		final String smtpFrom = "hksda@noahwm.com";
+		final String smtpFrom = "hksda@bsdn.cn";
 		System.out.println("sendEmail....1....");
 		Session session = this.getMailSession();
 		MimeMessage mimeMsg = new MimeMessage(session);
@@ -56,12 +56,12 @@ public class TestEmail {
 private Session getMailSession(){
 //	String smtpHost = "smtp.163.com";
 //	final String smtpPassword = "abc123";
-//	final String smtpUser = "gopher_oc@163.com";;
+//	final String smtpUser = "bsdn_oc@163.com";;
 //	Properties properties = new Properties();
 //	properties.put("mail.smtp.host",smtpHost);
 //	properties.put("mail.smtp.auth","true");
-	String smtpHost = "mail.noahwm.com.local";
-	final String smtpPassword = "qwer!234";
+	String smtpHost = "mail.bsdn.cn.local";
+	final String smtpPassword = "q234";
 	final String smtpUser = "hksda";;
 	Properties properties = new Properties();
 	properties.put("mail.smtp.host",smtpHost);
@@ -78,8 +78,8 @@ private Session getMailSession(){
 		EmailSender sender=new EmailSender();
 		String smtpHost = "smtp.163.com";
 		String smtpPassword = "abc123";
-		//pwd=gopher2017
-		String smtpUser = "gopher_oc@163.com";;
+		//pwd=bsdn2017
+		String smtpUser = "bsdn_oc@163.com";;
 		String smtpPort = null;
 		sender.setSmtpHost(smtpHost);
 		sender.setSmtpIsAuth(true);
@@ -89,10 +89,10 @@ private Session getMailSession(){
 		sender.setDefaultSenderEmailAddress(smtpUser);
 		MessagePacket mp = new MessagePacket();
 	    mp.setContent("哈老你好啊aaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbbbcccccccccccccccc "+new Date());
-	    mp.setTitle("我是gopher sender[lucas.yue]");
+	    mp.setTitle("我是bsdn sender[lucas.yue]");
 	    DefaultUser u=new DefaultUser();
 	    Collection<IUser>uList=new ArrayList();
-	    u.setEmail("yyj0y01@sp.noahwm.com");
+	    u.setEmail("yyj0y01@sp.bsdn.cn");
 	    uList.add(u);
 	    mp.setTo(uList);
 		try {

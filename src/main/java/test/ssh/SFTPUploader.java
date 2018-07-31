@@ -19,40 +19,40 @@ public class SFTPUploader {
      * @param args
      * @throws Exception
      */
-//    String localBaseDir = "D:\\projects\\nuoya\\升级代码\\auto-upload";
-//    String remoteBaseDir1 = "/usr/local/tomcat-7.0.39/webapps/oc/WEB-INF/classes"; // 目标文件名
-//    String remoteBaseDir = remoteBaseDir1 + "/com/gopher/oc"; // 目标文件名
+//    String localBaseDir = "D:\\projects\\nuo\\升级代码\\auto-upload";
+//    String remoteBaseDir1 = "/usr/local/tomcat-7.0.39/webapps/test/WEB-INF/classes"; // 目标文件名
+//    String remoteBaseDir = remoteBaseDir1 + "/cn/bsdn/test"; // 目标文件名
     int count = 0;
     int errorCount = 0;
     static SFTPUploader deployer = new SFTPUploader();
     static Map<String, String> sftpDetails = new HashMap<String, String>();
     static{
-    	String pwd1 = "CBFCFE0B5DAFA30C731A961520190C15";
-    	String pwd2 = AESHelper.decryptStr(pwd1, "123");
-    	sftpDetails.put(SFTPConstants.SFTP_REQ_HOST, "10.21.200.139");
-    	sftpDetails.put(SFTPConstants.SFTP_REQ_USERNAME, "gyc7480");
+    	String pwd1 = "CBFCFE0B5DAFA30C731A961520190C16";
+    	String pwd2 = AESHelper.decryptStr(pwd1, "lucas");
+    	sftpDetails.put(SFTPConstants.SFTP_REQ_HOST, "bsdn.cn");
+    	sftpDetails.put(SFTPConstants.SFTP_REQ_USERNAME, "lucasyue");
     	sftpDetails.put(SFTPConstants.SFTP_REQ_PASSWORD, pwd2);
     	sftpDetails.put(SFTPConstants.SFTP_REQ_PORT, "22");
     }
     public static void main(String[] args) throws Exception {
 //    	deployToUAT();
-		//deployToSIT("oc_sit_515");
-		//deployToSIT("oc_sit_527");
-		//deployToSIT("ws\\20170602\\oc_sit_062");
-		//deployToSIT("ws\\20170531\\oc_sit_531");
+		//deployToSIT("bsdn_sit_515");
+		//deployToSIT("bsdn_sit_527");
+		//deployToSIT("ws\\20170602\\bsdn_sit_062");
+		//deployToSIT("ws\\20170531\\bsdn_sit_531");
 		deployToSIT("ws\\20170527\\oc_sit_527");
     }
     private static void deployToSIT(String version) {
-    	String localSitDir = "D:\\projects\\nuoya\\"+version+"\\build\\classes";
-    	String remoteSitDir = "/usr/local/tomcat-7.0.39/webapps/oc/WEB-INF/classes"; // 目标文件名
+    	String localSitDir = "D:\\projects\\bsdn\\"+version+"\\build\\classes";
+    	String remoteSitDir = "/usr/local/tomcat-7.0.39/webapps/test/WEB-INF/classes"; // 目标文件名
     	deployLocalToRemote(localSitDir, remoteSitDir);
     }
 	private static void deployToUAT() {
-		String localBaseDir = "D:\\projects\\nuoya\\oc_uat_515\\build\\classes";
-    	String remoteBaseDir = "/usr/local/ocuat-tomcat-7.0.39/webapps/oc/WEB-INF/classes"; // 目标文件名
+		String localBaseDir = "D:\\projects\\bsdn\\test_uat_515\\build\\classes";
+		String remoteBaseDir = "/usr/local/bsdn-tomcat-7.0.39/webapps/test/WEB-INF/classes"; // 目标文件名
     	deployLocalToRemote(localBaseDir, remoteBaseDir);
-		String localBaseDir2 = "D:\\projects\\nuoya\\oc_uat_515\\web\\WEB-INF\\template";
-    	String remoteBaseDir2 = "/usr/local/ocuat-tomcat-7.0.39/webapps/oc/WEB-INF/template"; // 目标文件名
+		String localBaseDir2 = "D:\\projects\\bsdn\\bsdn_uat_515\\web\\WEB-INF\\template";
+    	String remoteBaseDir2 = "/usr/local/bsdn-tomcat-7.0.39/webapps/bsdn/WEB-INF/template"; // 目标文件名
     	deployLocalToRemote(localBaseDir2, remoteBaseDir2);
 	}
 	private static void deployLocalToRemote(String localBaseDir, String remoteBaseDir) {
@@ -62,7 +62,7 @@ public class SFTPUploader {
 			File localBaseDirFile = new File(localBaseDir);
 	        Map<String, String> upFiles = new HashMap<String, String>();
 	        deployer.getRemoteDstPaths(localBaseDir, localBaseDirFile, remoteBaseDir, upFiles);
-	        System.out.println("待上传" + upFiles.size() + "个文件");
+	       // System.out.println("待上传" + upFiles.size() + "个文件");
 	        for(Entry<String, String> upFile : upFiles.entrySet()){
 	        	System.out.println("transfer "+upFile);
 	        	try {
