@@ -8,11 +8,7 @@ import org.hibernate.cfg.Configuration;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 
-import com.bstek.bdf2.core.model.DefaultUser;
-
-import test.jpa.hibernate.model.Account;
-import test.jpa.hibernate.model.Product;
-import test.jpa.hibernate.model.SaleAgencyPayAccount;
+import test.jpa.hibernate.defaultvalue.MyTable;
 
 public class BaseTest {
 	protected static SessionFactory sessionFactory; 
@@ -27,11 +23,12 @@ public class BaseTest {
 			e.printStackTrace();
 		}
     	cfg=new Configuration().addProperties(p);
+    	cfg.addAnnotatedClass(MyTable.class);
     	//cfg.addAnnotatedClass(NoticeFlow.class);
-        cfg.addAnnotatedClass(DefaultUser.class);
-        cfg.addAnnotatedClass(Product.class);
-        cfg.addAnnotatedClass(SaleAgencyPayAccount.class);
-        cfg.addAnnotatedClass(Account.class);
+//        cfg.addAnnotatedClass(DefaultUser.class);
+//        cfg.addAnnotatedClass(Product.class);
+//        cfg.addAnnotatedClass(SaleAgencyPayAccount.class);
+//        cfg.addAnnotatedClass(Account.class);
         //cfg.addAnnotatedClass(LogInfo.class);
         sessionFactory = cfg.buildSessionFactory();
     } 
